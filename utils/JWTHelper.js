@@ -28,6 +28,10 @@ class JWTHelper {
       });
     });
   }
+
+  splitToken(bearerToken) {
+      return bearerToken.split(" ")[1]
+  }
 }
 
 module.exports = new JWTHelper();
