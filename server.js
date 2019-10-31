@@ -28,8 +28,8 @@ app.listen(PORT, async err => {
       useUnifiedTopology: true
     });
   } catch (e) {
-    console.error(e)
-    process.exit(3)
+    console.error(e);
+    process.exit(3);
   }
 });
 
@@ -37,5 +37,5 @@ const db = mongoose.connection;
 db.once("open", () => {
   console.log(`MongoDB Connection Established`);
   const IndexRouter = require("./routes/index");
-  app.use("/auth",IndexRouter);
+  app.use("/auth", IndexRouter);
 });

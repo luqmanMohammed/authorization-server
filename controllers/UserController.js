@@ -35,7 +35,7 @@ class UserController {
           const isMatch = await compare(password, loginUser.password);
           if (isMatch) {
             const token = await jwtHelper.createToken(loginUser, JWT_SECRET);
-            console.log(token)
+            console.log(token);
             return res.status(200).json({
               access_token: token
             });
@@ -45,7 +45,7 @@ class UserController {
         }
       } else return res.status(401).send("Invalid Credintials");
     } catch (e) {
-        console.log(e)
+      console.log(e);
       return res.status(500).send(e.message);
     }
   }

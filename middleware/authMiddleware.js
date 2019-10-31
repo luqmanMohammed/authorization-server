@@ -7,7 +7,7 @@ const authenticateToken = async (req, res, next, role) => {
     const token = auth.split(" ")[1];
     let bearer = null;
     try {
-      bearer = await jwtHelper.verifyToken(token,JWT_SECRET);
+      bearer = await jwtHelper.verifyToken(token, JWT_SECRET);
       //Check if revoked
     } catch (error) {
       res.status(401).send("Invalid Token");
@@ -18,4 +18,5 @@ const authenticateToken = async (req, res, next, role) => {
   } else res.status(401).send("Invalid Token");
 };
 
-module.exports.rs_auth = (req,res,next) => authenticateToken(req,res,next,"resource_server");
+module.exports.rs_auth = (req, res, next) =>
+  authenticateToken(req, res, next, "resource_server");
