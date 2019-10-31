@@ -3,21 +3,16 @@ const { JWT_SECRET } = process.env;
 const RedisHelper = require("../utils/RedisHelper");
 class TokenController {
   async introspectToken(req, res, next) {
-    const { token } = req.body;
-    let splitToken = null;
-    try {
-      splitToken = jwtHelper.splitToken(token);
-    } catch (e) {
-      console.log("token =>" + splitToken);
+    const { token } = req.query;
+    if(!token) {
       return res
         .status(400)
-        .send("Invalid Token. Make Sure its a Bearer Token");
+        .send("Invalid Token. Make sure the token is sent via the 'token' query parameter");
     }
-
-    console.log(splitToken);
+    console.log(token);
     try {
       const { role, email, jti } = await jwtHelper.verifyToken(
-        splitToken,
+        token,
         JWT_SECRET
       );
       try {
@@ -41,21 +36,15 @@ class TokenController {
     }
   }
   async revokeToken(req,res,next) {
-    const { token } = req.body;
-    let splitToken = null;
-    try {
-      splitToken = jwtHelper.splitToken(token);
-    } catch (e) {
-      console.log("token =>" + token);
+    const { token } = req.query;
+    if(!token) {
       return res
         .status(400)
-        .send("Invalid Token. Make Sure its a Bearer Token");
+        .send("Invalid Token. Make sure the token is sent via the 'token' query parameter");
     }
-
-    console.log(splitToken);
     try {
       const { role, email, jti } = await jwtHelper.verifyToken(
-        splitToken,
+        token,
         JWT_SECRET
       );
       try {
