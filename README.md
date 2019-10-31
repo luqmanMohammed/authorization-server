@@ -11,3 +11,12 @@ Authorization Server for OREO Learning Management System - SLIIT Codefest
 ## Token Introspect
 
 ## Revoke
+
+
+## Auth Model
+
+{
+    email: email of the user,
+    password : bcrypt hashed password,
+    role : role of the user
+}
