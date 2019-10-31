@@ -22,6 +22,7 @@ class UserController {
         access_token: token
       });
     } catch (e) {
+      console.error(e);
       return res.status(500).send("System Error. Contact Support");
     }
   }
@@ -35,7 +36,6 @@ class UserController {
           const isMatch = await compare(password, loginUser.password);
           if (isMatch) {
             const token = await jwtHelper.createToken(loginUser, JWT_SECRET);
-            console.log(token);
             return res.status(200).json({
               access_token: token
             });
@@ -45,7 +45,7 @@ class UserController {
         }
       } else return res.status(401).send("Invalid Credintials");
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return res.status(500).send("System Error. Contact Support");
     }
   }
@@ -59,6 +59,7 @@ class UserController {
             return res.status(404).send("User Not Found");
         return res.status(204).send();
       } catch (e) {
+        console.error(e);
         return res.status(404).send("System Error. Contact Support");
       }
   }

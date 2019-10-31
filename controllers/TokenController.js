@@ -11,7 +11,6 @@ class TokenController {
         active: true
       });
     } catch (e) {
-      console.log(e);
       return res.status(200).json({
         active: false
       });
