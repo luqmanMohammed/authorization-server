@@ -8,22 +8,26 @@ class UserController {
     const { email, password } = req.body;
 
     try {
-      const isDuplicate = User.find({ email });
-      if (isDuplicate) {
-        return res.status(400).json();
+      const isDuplicate = await User.find({ email });
+      console.log(isDuplicate)
+      if (isDuplicate.length !== 0) {
+        return res.status(400).send("Duplicate Email");
       }
-      const User = new User({
+      const newUser = new User({
         email,
-        password: await hash(password, BCRYPT_ROUNDS)
+        password: await hash(password, parseInt(BCRYPT_ROUNDS))
       });
-      const savedUser = await User.save();
-      const token = jwtHelper.createToken(user, JWT_SECRET);
+      const savedUser = await newUser.save();
+      const token = jwtHelper.createToken(savedUser, JWT_SECRET);
       return res.status(201).json({
         access_token: token
       });
     } catch (e) {
       return res.status(500).send(e.message);
     }
+  }
+  async login(req,res,next) {
+
   }
 }
 

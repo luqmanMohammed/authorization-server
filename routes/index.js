@@ -9,7 +9,7 @@ IndexRouter.get("/health", (req,res) => {
     })
 })
 
-IndexRouter.use("user/",UserRouter)
+IndexRouter.use("/user",UserRouter)
 
 // auth/register
 
