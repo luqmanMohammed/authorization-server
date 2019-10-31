@@ -5,6 +5,5 @@ const TokenRouter = express.Router();
 
 TokenRouter.post("/introspect", rs_auth, TokenController.introspectToken);
 
-//TokenRouter.post("/login", (req,res) => TokenController.register(req,res));
 
 module.exports = TokenRouter;

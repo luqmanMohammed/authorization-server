@@ -2,7 +2,7 @@ const User = require("../models/UserSchema");
 const jwtHelper = require("../utils/JWTHelper");
 const { hash, compare } = require("bcrypt");
 const { BCRYPT_ROUNDS, JWT_SECRET } = process.env;
-
+const allowedRoles = ["admin","moderator","student"]
 class UserController {
   async register(req, res, next) {
     const { email, password } = req.body;
@@ -22,7 +22,7 @@ class UserController {
         access_token: token
       });
     } catch (e) {
-      return res.status(500).send(e.message);
+      return res.status(500).send("System Error. Contact Support");
     }
   }
   async login(req, res, next) {
@@ -51,11 +51,15 @@ class UserController {
   }
   async changeRole(req,res,next) {
       const {email,newRole} = req.body;
+      if (!allowedRoles.includes(newRole))
+        res.status(400).send("Invalid Role")
       try {
-        await User.findOneAndUpdate({email},{role:newRole});
+        const user = await User.findOneAndUpdate({email},{role:newRole});
+        if(!user)
+            return res.status(404).send("User Not Found");
         return res.status(204).send();
       } catch (e) {
-        return req.status(404).send("User Not Found");
+        return res.status(404).send("System Error. Contact Support");
       }
   }
 }
