@@ -1,4 +1,4 @@
-FROM nodejs:slim
+FROM node:8.16.2-alpine
 
 LABEL maintainer="m.luqman077@gmail.com"
 
