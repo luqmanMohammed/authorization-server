@@ -22,4 +22,4 @@ ENTRYPOINT [ "npm","start" ]
 
 CMD [ ]
 
-EXPOSE 7000
+EXPOSE 5500
