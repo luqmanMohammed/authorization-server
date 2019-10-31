@@ -42,5 +42,3 @@ db.once("open", () => {
   const IndexRouter = require("./routes/index");
   app.use("/auth", IndexRouter);
 });
-
-redisHelper.addRevokedTokenJTI("luqman@gmail.com","1232312");

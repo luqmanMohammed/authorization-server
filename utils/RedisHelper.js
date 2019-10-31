@@ -11,29 +11,33 @@ class RedisHelper {
   addRevokedTokenJTI(email, jti) {
     return new Promise(async (resolve, reject) => {
       try {
-        const jtis = await this.getRevokedTokenJTIs(email);
-        if (jtis) {
-          const newValue = jtis + ":" + jti;
-          this.client.set(email, newValue);
-          return resolve("Added");
-        } else {
-          this.client.set(email, jti);
-          return resolve("Added");
+        let jtis = await this.getRevokedTokenJTIs(email);
+        if(jtis.includes(jti))
+            return resolve("Already Added");
+        else {
+            jtis.push(jti)
         }
+        this.client.set(email,JSON.stringify(jtis));
+        return resolve("Added");
       } catch (e) {
         return reject(e);
       }
     });
   }
   getRevokedTokenJTIs(email) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise( async (resolve, reject) => {
       try {
         const jtis = await this.client
           .pipeline()
           .get(email)
           .exec();
+
         const [_, value] = jtis[0];
-        return resolve(value);
+        if(value) {
+            return resolve(JSON.parse(value));
+        } else {
+            return resolve([]);
+        }
       } catch (e) {
         return reject(e);
       }
@@ -44,10 +48,9 @@ class RedisHelper {
       try {
         const jtis = await this.getRevokedTokenJTIs(email);
         if (jtis) {
-          const jtisplit = jtis.split(":");
-          if (jtisplit.includes(jti)) return resolve(true);
+          if (jtis.includes(jti)) return resolve(true);
           else return resolve(false);
-        }
+        } else return resolve(false);
       } catch (e) {
         return reject(e);
       }
