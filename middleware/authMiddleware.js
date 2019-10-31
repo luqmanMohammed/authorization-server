@@ -8,6 +8,7 @@ const authenticateToken = async (req, res, next, role) => {
     let bearer = null;
     try {
       bearer = await jwtHelper.verifyToken(token,JWT_SECRET);
+      //Check if revoked
     } catch (error) {
       res.status(401).send("Invalid Token");
       return;
