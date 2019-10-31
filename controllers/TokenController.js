@@ -46,7 +46,7 @@ class TokenController {
     try {
       splitToken = jwtHelper.splitToken(token);
     } catch (e) {
-      console.log("token =>" + splitToken);
+      console.log("token =>" + token);
       return res
         .status(400)
         .send("Invalid Token. Make Sure its a Bearer Token");
