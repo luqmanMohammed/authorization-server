@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const randomstring = require("randomstring");
 class JWTHelper {
     createToken({email,role},secret) {
         return jwt.sign({
@@ -6,7 +7,7 @@ class JWTHelper {
             role
         },secret,{
             expiresIn: "3h",
-            jwtid: Math.random()+""
+            jwtid: randomstring.generate()
         });
     }
 }
