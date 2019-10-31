@@ -8,4 +8,5 @@ UserRouter.post("/register", rs_auth, UserController.register);
 // auth/login
 UserRouter.post("/login", UserController.login);
 
+UserRouter.patch("/changerole",UserController.changeRole)
 module.exports = UserRouter;
