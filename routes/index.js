@@ -1,4 +1,5 @@
 const express = require("express");
+const UserRouter = require("./userRoute");
 const IndexRouter = express.Router();
 
 // auth/health
@@ -8,6 +9,8 @@ IndexRouter.get("/health", (req,res) => {
     })
 })
 
+IndexRouter.use("user/",UserRouter)
+
 // auth/register
 
 // auth/login
@@ -15,3 +18,5 @@ IndexRouter.get("/health", (req,res) => {
 // auth/token/revoke
 
 // auth/token/introspect
+
+module.exports = IndexRouter;

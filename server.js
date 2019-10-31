@@ -36,5 +36,6 @@ app.listen(PORT, async err => {
 const db = mongoose.connection;
 db.once("open", () => {
   console.log(`MongoDB Connection Established`);
-  // DO INDEX ROUTING
+  const IndexRouter = require("./routes/index");
+  app.use("auth/",IndexRouter);
 });
