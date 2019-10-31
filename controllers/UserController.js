@@ -46,7 +46,7 @@ class UserController {
       } else return res.status(401).send("Invalid Credintials");
     } catch (e) {
       console.log(e);
-      return res.status(500).send(e.message);
+      return res.status(500).send("System Error. Contact Support");
     }
   }
   async changeRole(req,res,next) {
@@ -55,7 +55,7 @@ class UserController {
         await User.findOneAndUpdate({email},{role:newRole});
         return res.status(204).send();
       } catch (e) {
-        return req.status(404).send(e.message);
+        return req.status(404).send("User Not Found");
       }
   }
 }
