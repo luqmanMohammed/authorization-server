@@ -4,7 +4,7 @@ const IndexRouter = express.Router();
 
 // auth/health
 IndexRouter.get("/health", (req,res) => {
-    req.json({
+    res.json({
         "health": "active"
     })
 })

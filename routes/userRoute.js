@@ -7,8 +7,5 @@ const UserRouter = express.Router();
 UserRouter.post("/register", (req,res) => UserController.register(req,res));
 // auth/login
 UserRouter.post("/login", (req,res) => UserController.login(req,res));
-// auth/token/revoke
-
-// auth/token/introspect
 
 module.exports = UserRouter;

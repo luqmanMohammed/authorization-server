@@ -17,7 +17,7 @@ class UserController {
         password: await hash(password, parseInt(BCRYPT_ROUNDS))
       });
       const savedUser = await newUser.save();
-      const token = jwtHelper.createToken(savedUser, JWT_SECRET);
+      const token = await jwtHelper.createToken(savedUser, JWT_SECRET);
       return res.status(201).json({
         access_token: token
       });
@@ -34,7 +34,8 @@ class UserController {
         try {
           const isMatch = await compare(password, loginUser.password);
           if (isMatch) {
-            const token = jwtHelper.createToken(loginUser, JWT_SECRET);
+            const token = await jwtHelper.createToken(loginUser, JWT_SECRET);
+            console.log(token)
             return res.status(200).json({
               access_token: token
             });
@@ -44,6 +45,7 @@ class UserController {
         }
       } else return res.status(401).send("Invalid Credintials");
     } catch (e) {
+        console.log(e)
       return res.status(500).send(e.message);
     }
   }
