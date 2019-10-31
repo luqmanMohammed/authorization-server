@@ -14,7 +14,6 @@ class JWTHelper {
           jwtid: randomstring.generate()
         },
         (err, token) => {
-          console.log(err);
           if (err) return reject(err);
           else return resolve(token);
         }

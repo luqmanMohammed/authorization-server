@@ -1,5 +1,6 @@
 const express = require("express");
 const UserRouter = require("./userRoute");
+const TokenRouter = require("./tokenRoute");
 const IndexRouter = express.Router();
 
 // auth/health
@@ -9,8 +10,8 @@ IndexRouter.get("/health", (req,res) => {
     })
 })
 
-IndexRouter.use("/user",UserRouter)
-
+IndexRouter.use("/user",UserRouter);
+IndexRouter.use("/token",TokenRouter);
 // auth/register
 
 // auth/login
