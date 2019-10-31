@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const redisHelper = require("./utils/RedisHelper");
 
 const result = dotenv.config();
 if (result.error) {
@@ -41,3 +42,5 @@ db.once("open", () => {
   const IndexRouter = require("./routes/index");
   app.use("/auth", IndexRouter);
 });
+
+redisHelper.addRevokedTokenJTI("luqman@gmail.com","1232312");
