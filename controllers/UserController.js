@@ -1,6 +1,7 @@
 const User = require("../models/UserSchema");
+const jwtHelper = require("../utils/JWTHelper");
 const { hash } = require("bcrypt");
-const { BCRYPT_ROUNDS } = process.env;
+const { BCRYPT_ROUNDS, JWT_SECRET } = process.env;
 
 class UserController {
   async register(req, res, next) {
@@ -8,17 +9,22 @@ class UserController {
 
     try {
       const isDuplicate = User.find({ email });
-      if(isDuplicate) {
-          return res.status(400).json()
+      if (isDuplicate) {
+        return res.status(400).json();
       }
       const User = new User({
         email,
         password: await hash(password, BCRYPT_ROUNDS)
       });
       const savedUser = await User.save();
-
+      const token = jwtHelper.createToken(user, JWT_SECRET);
+      return res.status(201).json({
+        access_token: token
+      });
     } catch (e) {
-        res.status(500).send(e.message)
+      return res.status(500).send(e.message);
     }
   }
 }
+
+module.exports = new UserController();
