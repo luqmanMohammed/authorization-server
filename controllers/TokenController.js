@@ -14,7 +14,6 @@ class TokenController {
     console.log(splitToken)
     try {
       const { role, email } = await jwtHelper.verifyToken(splitToken, JWT_SECRET);
-      // check revoke
       return res.status(200).json({
         role,
         active: true

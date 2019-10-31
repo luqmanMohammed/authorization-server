@@ -1,5 +1,6 @@
 const jwtHelper = require("../utils/JWTHelper");
 const { JWT_SECRET } = process.env;
+const RedisHelper = require("../utils/RedisHelper");
 
 const authenticateToken = async (req, res, next, role) => {
   let auth = req.headers.authorization;
@@ -8,7 +9,15 @@ const authenticateToken = async (req, res, next, role) => {
     let bearer = null;
     try {
       bearer = await jwtHelper.verifyToken(token, JWT_SECRET);
-      //Check if revoked
+      try {
+        if(await RedisHelper.isRevoked(bearer.email,bearer.jti)) {
+          return res.status(401).send("Invalid Token");
+        }
+      } catch (rediserror) {
+        console.error(rediserror);
+        return res.status(500).send("System Error, Contact Support");
+      }
+
     } catch (error) {
       res.status(401).send("Invalid Token");
       return;
