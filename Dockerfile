@@ -1,12 +1,6 @@
-FROM node:8.16.2-alpine
+FROM node:latest
 
 LABEL maintainer="m.luqman077@gmail.com"
-
-WORKDIR /app
-
-COPY . ./app
-
-RUN npm install --save
 
 ENV DB_URI=mongodb://127.0.0.1:27017/oreo-auth
 
@@ -17,6 +11,12 @@ ENV JWT_SECRET=very_secret
 ENV BCRYPT_ROUNDS=10
 
 ENV PORT=5500
+
+WORKDIR /app
+
+COPY ./ ./
+
+RUN npm install --save
 
 ENTRYPOINT [ "npm","start" ]
 
