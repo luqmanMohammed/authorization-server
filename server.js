@@ -2,6 +2,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const morgan = require("morgan");
 
 const result = dotenv.config();
 if (result.error) {
@@ -13,6 +14,7 @@ const { PORT, DB_URI } = process.env;
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(morgan("dev"))
 
 app.listen(PORT, async err => {
   if (err) {
